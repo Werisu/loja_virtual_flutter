@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "941412549494",
+    "firebase_url": "https://lojaflutter-13d91.firebaseio.com",
+    "project_id": "lojaflutter-13d91",
+    "storage_bucket": "lojaflutter-13d91.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:941412549494:android:61cfb43e6cca42e6703057",
+        "android_client_info": {
+          "package_name": "br.com.enjuru.lopa_app_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "941412549494-9rpdps7ffrhubs72kh140ll7b166bdrh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmeECt9YhpXD-ey0CDnWJEykGUclC6Gqw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "941412549494-9rpdps7ffrhubs72kh140ll7b166bdrh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

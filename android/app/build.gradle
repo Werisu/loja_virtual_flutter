@@ -39,6 +39,8 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        // edidado pelo enjuru
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -58,4 +60,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    //editado pelo enjuru
+    implementation 'com.android.support:multidex:1.0.3'
 }
+
+apply plugin: 'com.google.gms.google-services'
