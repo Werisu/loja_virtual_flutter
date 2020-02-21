@@ -15,7 +15,7 @@ class ProductsData {
   ProductsData.fromDocment(DocumentSnapshot snapshot){
     id = snapshot.documentID;
     title = snapshot.data["title"];
-    price = snapshot.data["preco"];
+    price = snapshot.data["preco"] + 0.0;
     images = snapshot.data["imagens"];
     sizes = snapshot.data["sizes"];
   }
