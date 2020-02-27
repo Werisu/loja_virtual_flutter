@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lopa_app_flutter/Screens/login_screen.dart';
 
 import 'Screens/home_screen.dart';
 
@@ -15,7 +16,8 @@ class MyApp extends StatelessWidget {
         primaryColor: Color.fromARGB(255, 70, 130, 180)
       ),
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      //home: HomeScreen(),
+      home: LoginScreen(),
     );
   }
 }
