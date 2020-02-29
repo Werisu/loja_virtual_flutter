@@ -3,16 +3,27 @@ import 'package:lopa_app_flutter/Screens/singup_screen.dart';
 import 'package:lopa_app_flutter/models/user_model.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+
+  final _scaffoldkey = GlobalKey<ScaffoldState>();
+
+  final _emailController = TextEditingController();
+  final _passController = TextEditingController();
 
   final _formaKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldkey,
       appBar: AppBar(
         title: Text(
-          "Entrar"
+            "Entrar"
         ),
         centerTitle: true,
         actions: <Widget>[
@@ -20,13 +31,13 @@ class LoginScreen extends StatelessWidget {
             child: Text(
               "CRIAR CONTA",
               style: TextStyle(
-                fontSize: 15.0
+                  fontSize: 15.0
               ),
             ),
             textColor: Colors.white,
             onPressed: (){
               Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context)=>SignUpScreen())
+                  MaterialPageRoute(builder: (context)=>SignUpScreen())
               );
             },
           )
@@ -43,6 +54,7 @@ class LoginScreen extends StatelessWidget {
               padding: EdgeInsets.all(16.0),
               children: <Widget>[
                 TextFormField(
+                  controller: _emailController,
                   decoration: InputDecoration(
                       hintText: "Email"
                   ),
@@ -53,6 +65,7 @@ class LoginScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 16.0,),
                 TextFormField(
+                  controller: _passController,
                   decoration: InputDecoration(
                       hintText: "Senha"
                   ),
@@ -85,7 +98,12 @@ class LoginScreen extends StatelessWidget {
                       if(_formaKey.currentState.validate()){
 
                       }
-                      model.signIn();
+                      model.signIn(
+                          email: _emailController.text,
+                          pass: _passController.text,
+                          onSuccess: _onSuccess,
+                          onFail: _onFail
+                      );
                     },
                   ),
                 ),
@@ -94,6 +112,20 @@ class LoginScreen extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+
+  void _onSuccess(){
+    Navigator.of(context).pop();
+  }
+
+  void _onFail() {
+    _scaffoldkey.currentState.showSnackBar(
+        SnackBar(
+          content: Text("Falha ao entrar!"),
+          backgroundColor: Colors.redAccent,
+          duration: Duration(seconds: 3),
+        )
     );
   }
 }

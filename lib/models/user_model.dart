@@ -13,6 +13,14 @@ class UserModel extends Model{
 
   bool isLoading = false;
 
+
+  @override
+  void addListener(VoidCallback listener) {
+    super.addListener(listener);
+
+    _loadCurrentUser();
+  }
+
   void signUp({
     @required Map<String, dynamic> userData,
     @required String pass,
@@ -25,7 +33,10 @@ class UserModel extends Model{
         email: userData["email"],
         password: pass
     ).then((user) async{
-      firebaseUser = user as FirebaseUser;
+
+      print("\n ============> Chamando a função _saveUserData <============\n");
+
+      firebaseUser = user.user;
 
       await _saveUserData(userData);
 
@@ -36,19 +47,47 @@ class UserModel extends Model{
     }).catchError((e){
       onFail();
 
+      print("\n ============> Falhou! <============\n");
+
+      print(e);
+
       isLoading = false;
       notifyListeners();
     });
   }
 
-  void signIn() async{
+  void signIn({
+    @required String email,
+    @required String pass,
+    @required VoidCallback onSuccess,
+    @required VoidCallback onFail}) async{
     isLoading = true;
     notifyListeners();
 
-    await Future.delayed(Duration(seconds: 3));
+    _auth.signInWithEmailAndPassword(
+        email: email,
+        password: pass).then(
+        (user) async{
+          firebaseUser = user.user;
 
-    isLoading = false;
-    notifyListeners();
+          await _loadCurrentUser();
+
+          onSuccess();
+          isLoading = false;
+          notifyListeners();
+        }
+    ).catchError((e){
+
+      print("\n ============> Falhou! <============\n");
+
+      print(e);
+      
+      print("Email: $email\nPass: $pass}");
+
+      onFail();
+      isLoading = false;
+      notifyListeners();
+    });
   }
 
   void recoverPass(){
@@ -59,8 +98,39 @@ class UserModel extends Model{
 
   }
 
-  Future<Null> _saveUserData(Map<String, dynamic> userData){
-    this.userData = userData;
-    Firestore.instance.collection("users").document(firebaseUser.uid).setData(userData);
+  void signOut() async{
+    _auth.signOut();
+
+    userData = Map();
+    firebaseUser = null;
+
+    notifyListeners();
   }
+
+  bool estaLogado(){
+    return firebaseUser != null;
+  }
+
+  Future<Null> _saveUserData(Map<String, dynamic> userData) async{
+
+    print("\n ============> Criando coleção <============\n");
+
+    this.userData = userData;
+    await Firestore.instance.collection("users").document(firebaseUser.uid).setData(userData);
+
+    print("Dados: $userData");
+  }
+
+  Future<Null> _loadCurrentUser() async{
+    if(firebaseUser == null)
+      firebaseUser = await _auth.currentUser();
+    if(firebaseUser != null){
+      if(userData["name"] == null){
+        DocumentSnapshot docUser = await Firestore.instance.collection("users").document(firebaseUser.uid).get();
+        userData = docUser.data;
+      }
+    }
+    notifyListeners();
+  }
+
 }
