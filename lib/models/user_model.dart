@@ -13,12 +13,14 @@ class UserModel extends Model{
 
   bool isLoading = false;
 
+  static UserModel of(BuildContext context) => ScopedModel.of<UserModel>(context);
 
   @override
   void addListener(VoidCallback listener) {
     super.addListener(listener);
 
     _loadCurrentUser();
+
   }
 
   void signUp({
@@ -94,8 +96,8 @@ class UserModel extends Model{
     _auth.sendPasswordResetEmail(email: email);
   }
 
-  void isLoggedIn(){
-
+  bool isLoggedIn(){
+    return firebaseUser != null;
   }
 
   void signOut() async{

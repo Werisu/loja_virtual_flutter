@@ -13,6 +13,8 @@ class CardProduct {
 
   ProductsData productsData;
 
+  CardProduct();
+
   CardProduct.fromDocument(DocumentSnapshot documentSnapshot){
     cid = documentSnapshot.documentID;
     category = documentSnapshot.data["category"];
@@ -27,7 +29,7 @@ class CardProduct {
       "pid": pid,
       "quantity": quantity,
       "size": size,
-      "product": productsData.toResumeMap()
+      //"product": productsData.toResumeMap()
     };
   }
 

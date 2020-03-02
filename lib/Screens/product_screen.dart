@@ -1,7 +1,12 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:lopa_app_flutter/Screens/card_screen.dart';
+import 'package:lopa_app_flutter/Screens/login_screen.dart';
+import 'package:lopa_app_flutter/datas/cart_product.dart';
 import 'package:lopa_app_flutter/datas/products_data.dart';
+import 'package:lopa_app_flutter/models/cart_model.dart';
+import 'package:lopa_app_flutter/models/user_model.dart';
 
 class ProductScreen extends StatefulWidget {
 
@@ -21,12 +26,17 @@ class _ProductScreenState extends State<ProductScreen> {
 
   _ProductScreenState(this.produto);
 
+  final _scaffoldkey = GlobalKey<ScaffoldState>();
+
+  final _formaKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
 
     final Color primaryColor = Theme.of(context).primaryColor;
 
     return Scaffold(
+      key: _scaffoldkey,
       appBar: AppBar(
         title: Text(produto.title),
         centerTitle: true,
@@ -115,9 +125,36 @@ class _ProductScreenState extends State<ProductScreen> {
                   height: 44.0,
                   child: RaisedButton(
                     onPressed: size != null ?
-                    (){} : null,
+                    (){
+                      if(UserModel.of(context).isLoggedIn()){
+
+                        CardProduct cardProduct = CardProduct();
+                        cardProduct.size = size;
+                        cardProduct.quantity = 1;
+                        cardProduct.pid = produto.id;
+                        cardProduct.category = produto.category;
+
+                        CardModel.of(context).addCartItem(cardProduct);
+
+                        _scaffoldkey.currentState.showSnackBar(
+                          SnackBar(
+                            content: Text("Adicionado no carrinho!", textAlign: TextAlign.center,),
+                            backgroundColor: Theme
+                                .of(context)
+                                .primaryColor,
+                            duration: Duration(seconds: 3),
+                          )
+                        );
+
+                      }else{
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => LoginScreen())
+                        );
+                      }
+                    } : null,
                     child: Text(
-                      "Adicionar ao Carrinho",
+                      UserModel.of(context).isLoggedIn() ?
+                      "Adicionar ao Carrinho" : "Entre para Comprar",
                       style: TextStyle(fontSize: 18.0),
                     ),
                     color: primaryColor,

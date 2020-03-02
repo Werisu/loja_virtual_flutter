@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lopa_app_flutter/datas/products_data.dart';
 import 'package:lopa_app_flutter/tiles/product_tile.dart';
+import 'package:lopa_app_flutter/widgets/cart_button.dart';
 import 'package:path_provider/path_provider.dart';
 
 class CategoryScreen extends StatelessWidget {
@@ -18,6 +19,7 @@ class CategoryScreen extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        floatingActionButton: CartButton(),
         appBar: AppBar(
           title: Text(titulo),
           centerTitle: true,
@@ -49,14 +51,18 @@ class CategoryScreen extends StatelessWidget {
                     ),
                     itemCount: snapshot.data.documents.length,
                     itemBuilder: (context, index){
-                      return ProductTile("grid", ProductsData.fromDocment(snapshot.data.documents[index]));
+                      ProductsData data = ProductsData.fromDocment(snapshot.data.documents[index]);
+                      data.category = this.snapshot.documentID;
+                      return ProductTile("grid", data);
                     }
                   ),
                   ListView.builder(
                       padding: EdgeInsets.all(4.0),
                       itemCount: snapshot.data.documents.length,
                       itemBuilder: (context, index){
-                        return ProductTile("list", ProductsData.fromDocment(snapshot.data.documents[index]));
+                        ProductsData data = ProductsData.fromDocment(snapshot.data.documents[index]);
+                        data.category = this.snapshot.documentID;
+                        return ProductTile("list", data);
                       }
                   )
                 ],
