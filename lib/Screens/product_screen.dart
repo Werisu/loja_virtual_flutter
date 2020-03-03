@@ -7,6 +7,7 @@ import 'package:lopa_app_flutter/datas/cart_product.dart';
 import 'package:lopa_app_flutter/datas/products_data.dart';
 import 'package:lopa_app_flutter/models/cart_model.dart';
 import 'package:lopa_app_flutter/models/user_model.dart';
+import 'package:lopa_app_flutter/widgets/cart_button.dart';
 
 class ProductScreen extends StatefulWidget {
 
@@ -36,6 +37,7 @@ class _ProductScreenState extends State<ProductScreen> {
     final Color primaryColor = Theme.of(context).primaryColor;
 
     return Scaffold(
+      floatingActionButton: CartButton(),
       key: _scaffoldkey,
       appBar: AppBar(
         title: Text(produto.title),

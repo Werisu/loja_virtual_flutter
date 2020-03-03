@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lopa_app_flutter/Screens/login_screen.dart';
+import 'package:lopa_app_flutter/Screens/order_screen.dart';
 import 'package:lopa_app_flutter/models/cart_model.dart';
 import 'package:lopa_app_flutter/models/user_model.dart';
 import 'package:lopa_app_flutter/tiles/cart_tile.dart';
@@ -89,7 +90,16 @@ class CardScreen extends StatelessWidget {
                 ),
                 DiscountCart(),
                 ShipCard(),
-                CartPrice((){})
+                CartPrice(
+                        () async {
+                            String orderId = await model.finishOrder();
+                            if(orderId != null){
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(builder: (context) => OrderScreen(orderId))
+                              );
+                            }
+                          }
+                        )
               ],
             );
           }
