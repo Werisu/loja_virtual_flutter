@@ -29,7 +29,7 @@ class CardProduct {
       "pid": pid,
       "quantity": quantity,
       "size": size,
-      //"product": productsData.toResumeMap()
+      "product": productsData.toResumeMap()
     };
   }
 

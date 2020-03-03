@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lopa_app_flutter/Screens/login_screen.dart';
 import 'package:lopa_app_flutter/models/cart_model.dart';
 import 'package:lopa_app_flutter/models/user_model.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -22,7 +21,7 @@ class MyApp extends StatelessWidget {
               title: "Enjuru Clothing",
               theme: ThemeData(
                   primarySwatch: Colors.blue,
-                  primaryColor: Color.fromARGB(255, 70, 130, 180)
+                  primaryColor: Color.fromARGB(255, 0, 250, 154)
               ),
               debugShowCheckedModeBanner: false,
               //home: HomeScreen(),

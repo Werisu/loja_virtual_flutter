@@ -135,15 +135,22 @@ class _ProductScreenState extends State<ProductScreen> {
                         cardProduct.quantity = 1;
                         cardProduct.pid = produto.id;
                         cardProduct.category = produto.category;
+                        cardProduct.productsData = produto;
 
                         CardModel.of(context).addCartItem(cardProduct);
 
                         _scaffoldkey.currentState.showSnackBar(
                           SnackBar(
                             content: Text("Adicionado no carrinho!", textAlign: TextAlign.center,),
-                            backgroundColor: Theme
-                                .of(context)
-                                .primaryColor,
+                            action: SnackBarAction(
+                              label: "Ver",
+                              onPressed: (){
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(builder: (context) => CardScreen())
+                                );
+                              },
+                            ),
+                            backgroundColor: Colors.red[500],
                             duration: Duration(seconds: 3),
                           )
                         );
